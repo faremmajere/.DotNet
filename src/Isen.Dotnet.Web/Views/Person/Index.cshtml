@@ -1,0 +1,57 @@
+@{
+    ViewData["Title"] = "Liste des personnes";
+}
+@using Isen.Dotnet.Library.Model;
+@model IEnumerable<Person>;
+<div>
+    <h1>Liste <small>des personnes</small></h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Date de naissance</th>
+                <th scope="col">Ville de naissance</th>
+                <th scope="col">Ville de résidence</th>
+                <th scope="col">Tel...</th>
+                <th scope="col">Mail...</th>
+                <th scope="col">Role...</th>
+                <th scope="col">Service...</th>
+                <th scope="col">Action...</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var person in Model)
+            {
+            <tr>
+                <th scope="row">@person.Id</th>
+                <td>@person.LastName</td>
+                <td>@person.FirstName</td>
+                <td>@person.DateOfBirth.Value.ToShortDateString() (@person.Age ans)</td>
+                <td>@person.BirthCity?.Name</td>
+                <td>@person.ResidenceCity?.Name</td>
+                <td>@person.Tel</td>
+                <td>@person.Mail</td>
+                <td><ul>
+                    @foreach(var role in person.RolePersonnes)
+                    {
+                        <li>@role.Role.Name</li>
+                    }
+                </ul></td>
+                <td>@person.Service?.Name</td>
+                <td>
+                    <a class="btn btn-outline-primary"
+                        asp-controller="Person"
+                        asp-action="Edit"
+                        asp-route-id="@person.Id">Modifier</a>
+                    <a class="btn btn-outline-danger"
+                        asp-controller="Person"
+                        asp-action="Delete"
+                        asp-route-id="@person.Id">Supprimer</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
